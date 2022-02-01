@@ -4,6 +4,7 @@ describe Oystercard do
 it {is_expected.to respond_to :balance}
 it {is_expected.to respond_to(:top_up).with(1).argument}
 it {is_expected.to respond_to(:deduct).with(1).argument}
+it {is_expected.to respond_to :in_journey?}
   
   describe "#balance" do
     it "should check a card has a balance" do
@@ -27,6 +28,26 @@ it {is_expected.to respond_to(:deduct).with(1).argument}
     it "should deduct money from my card" do
       subject.top_up(20)
       expect { subject.deduct(5)}. to change { subject.balance}.by -5
+    end
+  end
+  
+
+  describe "#in_journey" do
+    it "is initially not in a journey" do
+      expect(subject).not_to be_in_journey
+    end
+  
+
+    it "can touch in" do
+
+      subject.touch_in
+      expect(subject).to be_in_journey
+    end
+
+    it "can touch out" do
+      subject.touch_in
+      subject.touch_out
+      expect(subject).not_to be_in_journey
     end
   end
 
