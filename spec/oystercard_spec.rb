@@ -3,6 +3,7 @@ require "Oystercard"
 describe Oystercard do
 it {is_expected.to respond_to :balance}
 it {is_expected.to respond_to(:top_up).with(1).argument}
+it {is_expected.to respond_to(:deduct).with(1).argument}
   
   describe "#balance" do
     it "should check a card has a balance" do
@@ -22,4 +23,15 @@ it {is_expected.to respond_to(:top_up).with(1).argument}
     end
   end
 
+  describe "#deduct" do
+    it "should deduct money from my card" do
+      subject.top_up(20)
+      expect { subject.deduct(5)}. to change { subject.balance}.by -5
+    end
+  end
+
 end
+
+# In order to get through the barriers.
+# As a customer
+# I need to touch in and out.
