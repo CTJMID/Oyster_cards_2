@@ -19,13 +19,13 @@ class Oystercard
   end
 
   def touch_in
-    # fail "minimum amount needed, £1" if balance < MINIMUM_BALANCE
+    fail "minimum amount needed, £1" if balance < MINIMUM_BALANCE
     @in_use = true
     
   end
 
   def in_journey?
-    @in_use
+    @in_use 
   end
 
   def touch_out
