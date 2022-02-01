@@ -4,6 +4,7 @@ describe Oystercard do
 it {is_expected.to respond_to :balance}
 it {is_expected.to respond_to(:top_up).with(1).argument}
 it {is_expected.to respond_to(:deduct).with(1).argument}
+it {is_expected.to respond_to :touch_in}
 it {is_expected.to respond_to :in_journey?}
   
   describe "#balance" do
@@ -39,11 +40,13 @@ it {is_expected.to respond_to :in_journey?}
   
 
     it "can touch in" do
-
       subject.touch_in
       expect(subject).to be_in_journey
     end
-
+    # it "gives error message if below minimum amount" do 
+    #  # minimum_balance = Oystercard::MINIMUM_BALANCE
+    #   expect{subject.touch_in}.to raise_error "minimum amount needed, £1"
+    # end
     it "can touch out" do
       subject.touch_in
       subject.touch_out
