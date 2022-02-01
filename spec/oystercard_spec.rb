@@ -3,7 +3,7 @@ require "Oystercard"
 describe Oystercard do
 it {is_expected.to respond_to :balance}
 it {is_expected.to respond_to(:top_up).with(1).argument}
-it {is_expected.to respond_to(:deduct).with(1).argument}
+# it {is_expected.to respond_to(:deduct).with(1).argument}
 # it {is_expected.to respond_to :touch_in}
 # it {is_expected.to respond_to :in_journey?}
   
@@ -25,12 +25,12 @@ it {is_expected.to respond_to(:deduct).with(1).argument}
     end
   end
 
-  describe "#deduct" do
-    it "should deduct money from my card" do
-      subject.top_up(20)
-      expect { subject.deduct(5)}. to change { subject.balance}.by -5
-    end
-  end
+  # describe "#deduct" do
+  #   it "should deduct money from my card" do
+  #     subject.top_up(20)
+  #     expect { subject.deduct(5)}. to change { subject.balance}.by -5
+  #   end
+  # end
   
 
   describe "#in_journey" do
@@ -48,13 +48,21 @@ it {is_expected.to respond_to(:deduct).with(1).argument}
     it "gives error message if below minimum amount" do
       expect{subject.touch_in}.to raise_error "minimum amount needed, £1"
     end
-    
+    describe '#touch_out' do
     it "can touch out" do
       subject.top_up(1)
       subject.touch_in
       subject.touch_out
       expect(subject).not_to be_in_journey
-    end
+      end
+
+    it "checks a charge is made on touch out" do 
+      subject.top_up(1)
+      subject.touch_in
+      subject.touch_out
+      expect{ subject.touch_out}.to change {subject.balance}.by(-Oystercard::MINIMUM_BALANCE)
+      end      
+     end
   end
 
 

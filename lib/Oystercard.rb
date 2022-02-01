@@ -14,10 +14,6 @@ class Oystercard
     @balance += amount
   end
 
-  def deduct(fare)
-    @balance -= fare
-  end
-
   def touch_in
     fail "minimum amount needed, £1" if balance < MINIMUM_BALANCE
     @in_use = true
@@ -29,11 +25,15 @@ class Oystercard
   end
 
   def touch_out
+    deduct(MINIMUM_BALANCE)
     @in_use = false
   end
 
   
-
+private
+  def deduct(fare)
+    @balance -= fare
+  end
   
 
 end
