@@ -1,10 +1,14 @@
-require "Oystercard"
+require_relative '../lib/Oystercard'
+require_relative '../lib/Station'
 
 describe Oystercard do
-it {is_expected.to respond_to :balance}
-it {is_expected.to respond_to(:top_up).with(1).argument}
+
+  let(:station) { double(:station, :name => "Waterloo") }  
+
+  it {is_expected.to respond_to(:top_up).with(1).argument}
+  # it {is_expected.to respond_to :balance}
 # it {is_expected.to respond_to(:deduct).with(1).argument}
-# it {is_expected.to respond_to :touch_in}
+  it {is_expected.to respond_to(:touch_in).with(1).argument}
 # it {is_expected.to respond_to :in_journey?}
   
   describe "#balance" do
@@ -41,34 +45,42 @@ it {is_expected.to respond_to(:top_up).with(1).argument}
 
     it "can touch in" do
       subject.top_up(1)
-      subject.touch_in
+      subject.touch_in(station)
       expect(subject).to be_in_journey
     end
     
     it "gives error message if below minimum amount" do
-      expect{subject.touch_in}.to raise_error "minimum amount needed, £1"
+      expect{subject.touch_in(station)}.to raise_error "minimum amount needed, £1"
     end
     describe '#touch_out' do
     it "can touch out" do
       subject.top_up(1)
-      subject.touch_in
+      subject.touch_in(station)
       subject.touch_out
       expect(subject).not_to be_in_journey
       end
 
     it "checks a charge is made on touch out" do 
       subject.top_up(1)
-      subject.touch_in
+      subject.touch_in(station)
       subject.touch_out
       expect{ subject.touch_out}.to change {subject.balance}.by(-Oystercard::MINIMUM_BALANCE)
       end      
      end
+    end
+
+    describe "#store_station" do
+    # let(:station){ double :station }
+
+    it "stores the entry station" do
+      subject.top_up(1)
+      subject.touch_in(station)
+      expect(subject.entry_station.name).to eq station.name
+    end
   end
-
-
 
 end
 
-# In order to get through the barriers.
+# In order to pay for my journey
 # As a customer
-# I need to touch in and out.
+# I need to know where I've travelled from
