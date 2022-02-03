@@ -8,7 +8,6 @@ class Oystercard
   
   def initialize
     @balance = 0
-    @entry_station = nil 
   end
 
   def top_up(amount)
@@ -19,7 +18,7 @@ class Oystercard
   def touch_in(entry_station)
     fail "minimum amount needed, £1" if balance < MINIMUM_BALANCE
     @entry_station = entry_station
-    # @in_journey = true
+   
   end
 
   def in_journey?

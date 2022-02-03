@@ -78,3 +78,8 @@ describe "#balance" do
     end
 
  end
+
+
+#  In order to know where I have been
+# As a customer
+# I want to see all my previous trips
