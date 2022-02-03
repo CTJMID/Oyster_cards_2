@@ -4,6 +4,7 @@ describe Oystercard do
 
   it {is_expected.to respond_to(:top_up).with(1).argument}
   it {is_expected.to respond_to(:touch_in).with(1).argument}
+  it {is_expected.to respond_to(:touch_out).with(1).argument}
   # it {is_expected.to respond_to :balance}
   # it {is_expected.to respond_to(:deduct).with(1).argument}
   # it {is_expected.to respond_to :in_journey?}
@@ -48,21 +49,21 @@ describe "#balance" do
     it "can touch out" do
       subject.top_up(1)
       subject.touch_in(station)
-      subject.touch_out
+      subject.touch_out(station)
       expect(subject).not_to be_in_journey
       end
 
     it "checks a charge is made on touch out" do 
       subject.top_up(1)
       subject.touch_in(station)
-      subject.touch_out
-      expect{ subject.touch_out}.to change {subject.balance}.by(-Oystercard::MINIMUM_BALANCE)
+      subject.touch_out(station)
+      expect{ subject.touch_out(station)}.to change {subject.balance}.by(-Oystercard::MINIMUM_BALANCE)
       end
     
       it "checks that entry station is set to nil after touch out" do
         subject.top_up(1)
         subject.touch_in(station)
-        expect {subject.touch_out}.to change {subject.entry_station}.to nil 
+        expect {subject.touch_out(station)}.to change {subject.entry_station}.to nil 
       end
 
      end
@@ -77,7 +78,26 @@ describe "#balance" do
       expect(subject.entry_station).to eq station
     end
 
- end
+    it "stores the exit station" do
+      subject.top_up(1)
+      subject.touch_in(station)
+      subject.touch_out(station)
+      expect(subject.exit_station).to eq station
+    end
+  
+    it 'makes checks that journey is empty' do
+      expect(subject.journey_history).to eq([])
+    end
+
+    it 'makes a list of journys' do
+      subject.top_up(1)
+      subject.touch_in(station)
+      subject.touch_out(station)
+      expect(subject.journey_history).to eq([{station => station}])
+    end
+  end
+
+ 
 
 
 #  In order to know where I have been
