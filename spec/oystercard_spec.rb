@@ -27,18 +27,18 @@ describe "#balance" do
     end
   end
   
-  describe "#in_journey" do
-    it "is initially not in a journey" do
-      expect(subject).not_to be_in_journey
-    end
-  end 
+  # describe "#in_journey" do
+  #   it "is initially not in a journey" do
+  #     expect(subject).not_to be_in_journey
+  #   end
+  # end 
 
   describe '#touch_in' do 
-    it "can touch in" do
-      subject.top_up(1)
-      subject.touch_in(station)
-      expect(subject).to be_in_journey
-    end
+    # it "can touch in" do
+    #   subject.top_up(1)
+    #   subject.touch_in(station)
+    #   expect(subject).to be_in_journey
+    # end
     
     it "gives error message if below minimum amount" do
       expect{subject.touch_in(station)}.to raise_error "minimum amount needed, £1"
@@ -46,12 +46,12 @@ describe "#balance" do
   
 
     describe '#touch_out' do
-    it "can touch out" do
-      subject.top_up(1)
-      subject.touch_in(station)
-      subject.touch_out(station)
-      expect(subject).not_to be_in_journey
-      end
+    # it "can touch out" do
+    #   subject.top_up(1)
+    #   subject.touch_in(station)
+    #   subject.touch_out(station)
+    #   expect(subject).not_to be_in_journey
+    #   end
 
     it "checks a charge is made on touch out" do 
       subject.top_up(1)
@@ -85,21 +85,14 @@ describe "#balance" do
       expect(subject.exit_station).to eq station
     end
   
-    it 'makes checks that journey is empty' do
-      expect(subject.journey_history).to eq([])
-    end
+    # it 'makes checks that journey is empty' do
+    #   expect(subject.journey_history).to eq([])
+    # end
 
-    it 'makes a list of journys' do
-      subject.top_up(1)
-      subject.touch_in(station)
-      subject.touch_out(station)
-      expect(subject.journey_history).to eq([{station => station}])
-    end
+    # it 'makes a list of journys' do
+    #   subject.top_up(1)
+    #   subject.touch_in(station)
+    #   subject.touch_out(station)
+    #   expect(subject.journey_history).to eq([{station => station}])
+    # end
   end
-
- 
-
-
-#  In order to know where I have been
-# As a customer
-# I want to see all my previous trips
