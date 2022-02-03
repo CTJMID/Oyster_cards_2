@@ -1,17 +1,14 @@
 require_relative '../lib/Oystercard'
-require_relative '../lib/Station'
 
 describe Oystercard do
 
-  let(:station) { double(:station, :name => "Waterloo") }  
-
   it {is_expected.to respond_to(:top_up).with(1).argument}
-  # it {is_expected.to respond_to :balance}
-# it {is_expected.to respond_to(:deduct).with(1).argument}
   it {is_expected.to respond_to(:touch_in).with(1).argument}
-# it {is_expected.to respond_to :in_journey?}
-let (:station) { double :station }
-  describe "#balance" do
+  # it {is_expected.to respond_to :balance}
+  # it {is_expected.to respond_to(:deduct).with(1).argument}
+  # it {is_expected.to respond_to :in_journey?}
+  
+describe "#balance" do
     it "should check a card has a balance" do
       expect(subject.balance).to eq 0 
     end
@@ -28,15 +25,7 @@ let (:station) { double :station }
       expect{ subject.top_up(1) }.to raise_error "Maximum balance #{maximum_balance} exceeded"
     end
   end
-
-  # describe "#deduct" do
-  #   it "should deduct money from my card" do
-  #     subject.top_up(20)
-  #     expect { subject.deduct(5)}. to change { subject.balance}.by -5
-  #   end
-  # end
   
-
   describe "#in_journey" do
     it "is initially not in a journey" do
       expect(subject).not_to be_in_journey
@@ -53,11 +42,7 @@ let (:station) { double :station }
     it "gives error message if below minimum amount" do
       expect{subject.touch_in(station)}.to raise_error "minimum amount needed, £1"
     end
-    it 'stres the entry station' do
-      subject.top_up(1)
-      expect {subject.touch_in(station)}.to change {subject.entry_station}.to(station)
-     # expect(subject.entry_station).to eq station
-    end
+  
 
     describe '#touch_out' do
     it "can touch out" do
@@ -83,18 +68,13 @@ let (:station) { double :station }
      end
     end
 
-    describe "#store_station" do
-    # let(:station){ double :station }
+    
+    let(:station){ double :station }
 
     it "stores the entry station" do
       subject.top_up(1)
       subject.touch_in(station)
-      expect(subject.entry_station.name).to eq station.name
+      expect(subject.entry_station).to eq station
     end
-  end
 
-end
-
-# In order to pay for my journey
-# As a customer
-# I need to know where I've travelled from
+ end
