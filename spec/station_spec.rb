@@ -1,4 +1,4 @@
-require "Station"
+require_relative '../lib/Station'
 
 describe Station do
 # it {is_expected.to respond_to :initialize}
